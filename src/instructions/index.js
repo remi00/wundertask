@@ -1,3 +1,4 @@
 const DeviceInfo = require('./DeviceInfo');
+const ErrorInstruction = require('./ErrorInstruction');
 
-module.exports = { DeviceInfo };
+module.exports = { DeviceInfo, ErrorInstruction };
