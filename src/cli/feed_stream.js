@@ -15,26 +15,22 @@ const prettyDump = data => console.info(inspect(data, { colors: true }));
 
 program
   .version('0.1.0')
-  .description('Parse the stream or file into the device information logs')
+  .description('Put lines one by one with a delay to stdout')
   .option('-f, --file <file>', 'input file')
+  .option('-d, --delay <delay>', 'delay between lines')
   .parse(process.argv);
 
-const { stream, file } = program.opts();
+const { delay, file } = program.opts();
+if (!file) {
+  program.help();
+  process.exit(1);
+}
 
 (async function () {
-  if (file) {
-    const data = await readFile(file);
-    const result = getDeviceInformations(data.toString());
-    prettyDump(result);
-    process.exit(0);
+  const data = await readFile(file);
+  const lines = data.toString().split(/\r?\n/);
+  for (const line of lines) {
+    await new Promise(resolve => setTimeout(resolve, delay || 1000 * Math.random()));
+    console.log(line);
   }
-  console.info('Stream mode enabled, waiting for data on standard input');
-  process.stdin
-    .on('data', function (data) {
-      const result = getDeviceInformations(data.toString());
-      prettyDump(result);
-    })
-    .on('error', function (err) {
-      console.error(`Error during pipe: ${error.message}`);
-    });
 })();
