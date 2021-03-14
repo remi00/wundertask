@@ -8,7 +8,23 @@ Basic implementation of the task provided.
 
 Please note to use modern NodeJS, like 14+ ([nodenv](https://github.com/nodenv/nodenv) recommended).
 
-## Execution
+## CLI
+
+It is possible to use CLI script for playing around. It supports both stream and input parameter modes.
+
+Regular input parameter execution:
+
+`./src/cli/index.js --file ./test/fixtures/v2`
+
+### Pipe through stdin
+
+See how cool the usage can be with streams usage (feed)
+
+`./src/cli/feed_stream.js -f ./test/fixtures/v2 | ./src/cli/index.js`
+
+![Streams screenshot](docs/wunder_peek_streams.gif)
+
+## Tests
 
 Just run:
 
@@ -22,7 +38,7 @@ It is possible to use `VERBOSE` ENV variable to see logging on the input.
 
 ```VERBOSE=1 npm run test:w```
 
-![Screenshot](docs/exeuction_screenshot.png)
+![Tests screenshot](docs/exeuction_screenshot.png)
 
 ## Questions and controversies about the task
 
